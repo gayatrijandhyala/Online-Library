@@ -4,8 +4,8 @@ import java.sql.*;
 public class BuyBooksV1 extends Frame 
 {
 	Button BuyBB;
-	TextField buidTf, boidTf;
-	//TextArea errorText;
+	TextField buidTf, boidTf,whenTf;
+	TextArea errorText;
 	Connection connection;
 	Statement statement;
 	public BuyBooksV1() 
@@ -47,23 +47,24 @@ public class BuyBooksV1 extends Frame
 			{
 				try 
 				{			  
-				  String query= "INSERT INTO buys VALUES(" + buidTf.getText() + ", " + boidTf.getText() + ")";
+				  String query= "INSERT INTO buys VALUES(" + buidTf.getText() + ", " + boidTf.getText() +"'"+whenTf.getText()+ "')";
 				  int i = statement.executeUpdate(query);
-				 // errorText.append("\nInserted " + i + " rows successfully");
+				  errorText.append("\nInserted " + i + " rows successfully");
 				} 
 				catch (SQLException insertException) 
 				{
-			//	  displaySQLErrors(insertException);
+				  displaySQLErrors(insertException);
 				}
 			}
 		});
 
 		buidTf = new TextField(15);
 		boidTf = new TextField(15);
+		whenTf = new TextField(15);
 		
 		
-		//errorText = new TextArea(10, 40);
-		//errorText.setEditable(false);
+		errorText = new TextArea(10, 40);
+		errorText.setEditable(false);
 
 		Panel first = new Panel();
 		first.setLayout(new GridLayout(4, 2));
@@ -71,6 +72,8 @@ public class BuyBooksV1 extends Frame
 		first.add(buidTf);
 		first.add(new Label("Book ID:"));
 		first.add(boidTf);
+		first.add(new Label("When:"));
+		first.add(whenTf);
 		
 		first.setBounds(125,90,200,100);
 		
@@ -87,6 +90,15 @@ public class BuyBooksV1 extends Frame
 		setSize(500, 600);
 		setVisible(true);
 	}
+	
+	
+	private void displaySQLErrors(SQLException e) 
+	{
+		errorText.append("\nSQLException: " + e.getMessage() + "\n");
+		errorText.append("SQLState:     " + e.getSQLState() + "\n");
+		errorText.append("VendorError:  " + e.getErrorCode() + "\n");
+	}
+
 	
 
 	public static void main(String[] args) 
