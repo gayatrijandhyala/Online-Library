@@ -4,7 +4,7 @@ import java.sql.*;
 public class BuyBooksV1 extends Frame 
 {
 	Button BuyBB;
-	TextField buidTf, boidTf,whenTf;
+	TextField buidTf, boidTf,whenTf,rateTf;
 	TextArea errorText;
 	Connection connection;
 	Statement statement;
@@ -47,7 +47,7 @@ public class BuyBooksV1 extends Frame
 			{
 				try 
 				{			  
-				  String query= "INSERT INTO buys VALUES(" + buidTf.getText() + ", " + boidTf.getText() +"'"+whenTf.getText()+ "')";
+				  String query= "INSERT INTO buys VALUES(" + buidTf.getText() + ", " + boidTf.getText() +"'"+whenTf.getText()+"',"+rateTf+ ")";
 				  int i = statement.executeUpdate(query);
 				  errorText.append("\nInserted " + i + " rows successfully");
 				} 
@@ -61,7 +61,7 @@ public class BuyBooksV1 extends Frame
 		buidTf = new TextField(15);
 		boidTf = new TextField(15);
 		whenTf = new TextField(15);
-		
+		rateTf = new TextField(15);		
 		
 		errorText = new TextArea(10, 40);
 		errorText.setEditable(false);
@@ -74,6 +74,8 @@ public class BuyBooksV1 extends Frame
 		first.add(boidTf);
 		first.add(new Label("When:"));
 		first.add(whenTf);
+		first.add(new Label("rate:"));
+		first.add(rateTf);
 		
 		first.setBounds(125,90,200,100);
 		
@@ -87,8 +89,11 @@ public class BuyBooksV1 extends Frame
 		add(second);
 	    
 		setTitle("Buying Books");
+		Color clr = new Color(100, 100, 140);
+		setBackground(clr); 
 		setSize(500, 600);
 		setVisible(true);
+		
 	}
 	
 	
